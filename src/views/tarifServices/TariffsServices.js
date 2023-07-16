@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { getTarif, postDeleteTarif } from 'src/redux/actions/tarifActions'
 import { getTarifServices, postDeleteTarifServices } from 'src/redux/actions/tarifServicesActions'
-const API = 'http://188.93.210.225:5000/'
+const API = 'https://api.madad-service.uz/'
 
 const TariffsServices = () => {
   const dispatch = useDispatch()

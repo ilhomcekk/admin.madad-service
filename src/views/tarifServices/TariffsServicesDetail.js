@@ -11,7 +11,7 @@ import {
   getDetailTarifServices,
   postDeleteTarifServices,
 } from 'src/redux/actions/tarifServicesActions'
-const API = 'http://188.93.210.225:5000/'
+const API = 'https://api.madad-service.uz/'
 
 const TariffsDetail = () => {
   const dispatch = useDispatch()

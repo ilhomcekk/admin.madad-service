@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import SunEditorComponent from 'src/components/SunEditorComponent'
 import { getDetailAdvertising, postUpdateAdvertising } from 'src/redux/actions/advertisingActions'
-const API = 'http://188.93.210.225:5000/'
+const API = 'https://api.madad-service.uz/'
 
 const AdvertisingUpdate = () => {
   const navigate = useNavigate()

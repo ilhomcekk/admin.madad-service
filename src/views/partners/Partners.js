@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { getPartners, postDeletePartners } from 'src/redux/actions/partnersActions'
-const API = 'http://188.93.210.225:5000/'
+const API = 'https://api.madad-service.uz/'
 
 const Partners = () => {
   const dispatch = useDispatch()

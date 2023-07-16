@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 // const API = `https://admin.madad-service.uz`
-const API = `http://188.93.210.225:5000`
+// const API = `http://188.93.210.225:5000`
+const API = 'https://api.madad-service.uz'
 
 const formData = (data) => {
   const form = new FormData()

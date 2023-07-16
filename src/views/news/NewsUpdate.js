@@ -7,7 +7,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import SunEditorComponent from 'src/components/SunEditorComponent'
 import { getDetailNews, postUpdateNews } from 'src/redux/actions/newsActions'
 import parse from 'html-react-parser'
-const API = `https://madad-service-api.onrender.com/`
+const API = `https://api.madad-service.uz/`
 
 const NewsUpdate = () => {
   const navigate = useNavigate()

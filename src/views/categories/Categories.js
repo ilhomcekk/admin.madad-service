@@ -21,7 +21,7 @@ import {
   postDeleteCategory,
   postUpdateCategory,
 } from 'src/redux/actions/categoryActions'
-const API = 'http://188.93.210.225:5000/'
+const API = 'https://api.madad-service.uz/'
 
 const Categories = () => {
   const dispatch = useDispatch()

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { getNews, postDeleteNews } from 'src/redux/actions/newsActions'
-const API = 'http://188.93.210.225:5000/'
+const API = 'https://api.madad-service.uz/'
 
 const News = () => {
   const dispatch = useDispatch()

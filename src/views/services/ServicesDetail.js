@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { getDetailServices, postDeleteServices } from 'src/redux/actions/servicesActions'
 import HTMLReactParser from 'html-react-parser'
-const API = 'http://188.93.210.225:5000/'
+const API = 'https://api.madad-service.uz/'
 
 const ServicesDetail = () => {
   const dispatch = useDispatch()
