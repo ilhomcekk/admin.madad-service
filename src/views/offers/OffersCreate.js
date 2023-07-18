@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import SunEditorComponent from 'src/components/SunEditorComponent'
+import { getCategory } from 'src/redux/actions/categoryActions'
 import { postCreateOffers } from 'src/redux/actions/offersActions'
 
 const OffersCreate = () => {
@@ -62,6 +63,12 @@ const OffersCreate = () => {
       }
     }
   }
+
+  useEffect(() => {
+    dispatch(getCategory())
+  }, [])
+
+  const categories = useSelector((state) => state.category.category)
 
   const { step } = useSelector((state) => state.offers)
   useEffect(() => {
@@ -135,6 +142,15 @@ const OffersCreate = () => {
               onChange={handleChangeParams}
               className="form-control"
             />
+            <h6 className="mt-4">Категория</h6>
+            <select name="category_id" onChange={handleChangeParams} className="form-select">
+              <option value="">Выбрать</option>
+              {categories?.map((item, idx) => (
+                <option key={idx} value={item?._id}>
+                  {item?.name_ru}
+                </option>
+              ))}
+            </select>
             <h6 className="mt-4">Описание (RU)</h6>
             <SunEditorComponent name="description_ru" onChangeValue={handleSunEditor} />
             <h6 className="mt-4">Описание (UZ)</h6>

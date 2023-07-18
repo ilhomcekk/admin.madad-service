@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import SunEditorComponent from 'src/components/SunEditorComponent'
 import { postCreateAdvertising } from 'src/redux/actions/advertisingActions'
+import { getCategory } from 'src/redux/actions/categoryActions'
 
 const AdvertisingCreate = () => {
   const dispatch = useDispatch()
@@ -21,6 +22,7 @@ const AdvertisingCreate = () => {
     description_ru: '',
     description_uz: '',
     description_en: '',
+    category_id: '',
     photo: '',
     link: '',
     date: dateInUzbekistan,
@@ -68,6 +70,12 @@ const AdvertisingCreate = () => {
   useEffect(() => {
     if (step === true) navigate('/advertising')
   }, [step])
+
+  useEffect(() => {
+    dispatch(getCategory())
+  }, [])
+
+  const categories = useSelector((state) => state.category.category)
 
   return (
     <div className="card">
@@ -136,6 +144,15 @@ const AdvertisingCreate = () => {
               onChange={handleChangeParams}
               className="form-control"
             />
+            <h6 className="mt-4">Категория</h6>
+            <select name="category_id" onChange={handleChangeParams} className="form-select">
+              <option value="">Выбрать</option>
+              {categories?.map((item, idx) => (
+                <option key={idx} value={item?._id}>
+                  {item?.name_ru}
+                </option>
+              ))}
+            </select>
             <h6 className="mt-4">Линк</h6>
             <input
               value={params.link}

@@ -12,6 +12,7 @@ import {
   getDetailTarifServices,
   postUpdateTarifServices,
 } from 'src/redux/actions/tarifServicesActions'
+const API = `https://api.madad-service.uz/`
 
 const TariffsUpdate = () => {
   const navigate = useNavigate()
@@ -125,7 +126,7 @@ const TariffsUpdate = () => {
                   <label htmlFor="drop-photo-input">
                     <img
                       className="card-img-top"
-                      src={updateContent?.photo}
+                      src={API + updateContent?.photo}
                       alt=""
                       id="newsCreateImage"
                     />

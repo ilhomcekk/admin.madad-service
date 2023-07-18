@@ -49,6 +49,7 @@ const Offers = () => {
                 Фото
               </th>
               <th scope="col">Название</th>
+              <th scope="col">Категория</th>
               <th scope="col">Дата</th>
               <th scope="col"></th>
             </tr>
@@ -65,6 +66,7 @@ const Offers = () => {
                   <img src={API + item?.photo} alt="" />{' '}
                 </td>
                 <td>{item?.name_ru}</td>
+                <td>{item?.category?.name_ru}</td>
                 <td>{item?.date?.split(',')[0]}</td>
                 <td className="table-icons-block">
                   <div className="table-icons">

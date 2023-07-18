@@ -63,6 +63,10 @@ const OffersDetail = () => {
                   <td>{data?.name_ru}</td>
                 </tr>
                 <tr>
+                  <td>Категория</td>
+                  <td>{data?.category?.name_ru}</td>
+                </tr>
+                <tr>
                   <td>Дата</td>
                   <td>{data?.date}</td>
                 </tr>

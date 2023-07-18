@@ -7,6 +7,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import SunEditorComponent from 'src/components/SunEditorComponent'
 import { getCategory } from 'src/redux/actions/categoryActions'
 import { getDetailServices, postUpdateServices } from 'src/redux/actions/servicesActions'
+const API = `https://api.madad-service.uz/`
 
 const ServicesUpdate = () => {
   const navigate = useNavigate()
@@ -120,7 +121,7 @@ const ServicesUpdate = () => {
                   <label htmlFor="drop-photo-input">
                     <img
                       className="card-img-top"
-                      src={updateContent?.photo}
+                      src={API + updateContent?.photo}
                       alt=""
                       id="newsCreateImage"
                     />

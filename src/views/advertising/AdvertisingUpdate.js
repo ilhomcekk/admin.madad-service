@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import SunEditorComponent from 'src/components/SunEditorComponent'
 import { getDetailAdvertising, postUpdateAdvertising } from 'src/redux/actions/advertisingActions'
+import { getCategory } from 'src/redux/actions/categoryActions'
 const API = 'https://api.madad-service.uz/'
 
 const AdvertisingUpdate = () => {
@@ -26,6 +27,7 @@ const AdvertisingUpdate = () => {
     description_uz: data?.description_uz,
     description_en: data?.description_en,
     photo: data?.photo,
+    category: data?.category,
     link: data?.link,
     date: dateInUzbekistan,
   })
@@ -77,6 +79,7 @@ const AdvertisingUpdate = () => {
       description_uz: data?.description_uz,
       description_en: data?.description_en,
       photo: data?.photo,
+      category: data?.category,
       link: data?.link,
       date: dateInUzbekistan,
     })
@@ -84,7 +87,10 @@ const AdvertisingUpdate = () => {
 
   useEffect(() => {
     dispatch(getDetailAdvertising(id))
+    dispatch(getCategory())
   }, [id])
+
+  const categories = useSelector((state) => state.category.category)
 
   const { step } = useSelector((state) => state.advertising)
   useEffect(() => {
@@ -117,7 +123,7 @@ const AdvertisingUpdate = () => {
                   <label htmlFor="drop-photo-input">
                     <img
                       className="card-img-top"
-                      src={updateContent?.photo}
+                      src={API + updateContent?.photo}
                       alt=""
                       id="newsCreateImage"
                     />
@@ -164,6 +170,18 @@ const AdvertisingUpdate = () => {
               value={updateContent.name_en}
               className="form-control"
             />
+            <h6 className="mt-4">Категория</h6>
+            <select name="category_id" onChange={handleChangeContent} className="form-select">
+              {categories?.map((item, idx) => (
+                <option
+                  selected={item?._id === updateContent.category?._id}
+                  key={idx}
+                  value={item?._id}
+                >
+                  {item?.name_ru}
+                </option>
+              ))}
+            </select>
             <h6 className="mt-4">Линк</h6>
             <input
               name="link"

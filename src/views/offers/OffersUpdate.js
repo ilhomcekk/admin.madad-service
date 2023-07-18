@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import SunEditorComponent from 'src/components/SunEditorComponent'
+import { getCategory } from 'src/redux/actions/categoryActions'
 import { getDetailOffers, postUpdateOffers } from 'src/redux/actions/offersActions'
 const API = 'https://api.madad-service.uz/'
 
@@ -22,6 +23,7 @@ const OffersUpdate = () => {
     name_ru: data?.name_ru,
     name_uz: data?.name_uz,
     name_en: data?.name_en,
+    category: data?.category,
     description_ru: data?.description_ru,
     description_uz: data?.description_uz,
     description_en: data?.description_en,
@@ -72,6 +74,7 @@ const OffersUpdate = () => {
       name_ru: data?.name_ru,
       name_uz: data?.name_uz,
       name_en: data?.name_en,
+      category: data?.category,
       description_ru: data?.description_ru,
       description_uz: data?.description_uz,
       description_en: data?.description_en,
@@ -82,7 +85,10 @@ const OffersUpdate = () => {
 
   useEffect(() => {
     dispatch(getDetailOffers(id))
+    dispatch(getCategory())
   }, [id])
+
+  const categories = useSelector((state) => state.category.category)
 
   const { step } = useSelector((state) => state.offers)
   useEffect(() => {
@@ -115,7 +121,7 @@ const OffersUpdate = () => {
                   <label htmlFor="drop-photo-input">
                     <img
                       className="card-img-top"
-                      src={updateContent?.photo}
+                      src={API + updateContent?.photo}
                       alt=""
                       id="newsCreateImage"
                     />
@@ -162,6 +168,18 @@ const OffersUpdate = () => {
               value={updateContent.name_en}
               className="form-control"
             />
+            <h6 className="mt-4">Категория</h6>
+            <select name="category_id" onChange={handleChangeContent} className="form-select">
+              {categories?.map((item, idx) => (
+                <option
+                  selected={item?._id === updateContent.category?._id}
+                  key={idx}
+                  value={item?._id}
+                >
+                  {item?.name_ru}
+                </option>
+              ))}
+            </select>
             <h6 className="mt-4">Описание (RU)</h6>
             <SunEditorComponent
               name="description_ru"

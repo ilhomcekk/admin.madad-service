@@ -116,7 +116,7 @@ const NewsUpdate = () => {
                   <label htmlFor="drop-photo-input">
                     <img
                       className="card-img-top"
-                      src={updateContent?.photo}
+                      src={API + updateContent?.photo}
                       alt=""
                       id="newsCreateImage"
                     />

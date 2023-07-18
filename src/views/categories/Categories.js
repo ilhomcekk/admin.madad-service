@@ -173,7 +173,7 @@ const Categories = () => {
                 <label htmlFor="drop-category-photo-input">
                   <img
                     className="card-img-top"
-                    src={updateContent?.photo}
+                    src={API + updateContent?.photo}
                     alt=""
                     id="categoryUpdateImage"
                   />

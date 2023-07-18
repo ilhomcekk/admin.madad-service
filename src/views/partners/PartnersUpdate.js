@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import SunEditorComponent from 'src/components/SunEditorComponent'
 import { getDetailPartners, postUpdatePartners } from 'src/redux/actions/partnersActions'
+const API = `https://api.madad-service.uz/`
 
 const PartnersUpdate = () => {
   const navigate = useNavigate()
@@ -106,7 +107,7 @@ const PartnersUpdate = () => {
                   <label htmlFor="drop-photo-input">
                     <img
                       className="card-img-top"
-                      src={updateContent?.photo}
+                      src={API + updateContent?.photo}
                       alt=""
                       id="newsCreateImage"
                     />
