@@ -6,7 +6,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import SunEditorComponent from 'src/components/SunEditorComponent'
 import { getCategory } from 'src/redux/actions/categoryActions'
-import { getServicesByCategory, postCreateServices } from 'src/redux/actions/servicesActions'
+import {
+  getServices,
+  getServicesByCategory,
+  postCreateServices,
+} from 'src/redux/actions/servicesActions'
 import { postCreateTarif } from 'src/redux/actions/tarifActions'
 
 const TariffsCreate = () => {
@@ -22,10 +26,15 @@ const TariffsCreate = () => {
     name_en: '',
     price: 0,
     category_id: '',
+    service_id: '',
     tariffs: [],
+    tariffs_uz: [],
+    tariffs_en: [],
     date: dateInUzbekistan,
   })
-  const [count, setCount] = useState(1)
+  const [countRu, setCountRu] = useState(1)
+  const [countUz, setCountUz] = useState(1)
+  const [countEn, setCountEn] = useState(1)
 
   const handleChangeParams = (e) => {
     const { name, value } = e.target
@@ -47,31 +56,79 @@ const TariffsCreate = () => {
     })
   }
 
-  const [arr, setArr] = useState([])
+  const [arrRu, setArrRu] = useState([])
+  const [arrUz, setArrUz] = useState([])
+  const [arrEn, setArrEn] = useState([])
 
-  const handleInputChange = (index, event) => {
+  const handleInputChangeRu = (index, event) => {
     const newValue = event.target.value
-    setArr((prevArray) => {
+    setArrRu((prevArray) => {
       const updatedArray = [...prevArray]
       updatedArray[index] = newValue
       return updatedArray
     })
   }
 
-  const handleRemove = (idx) => {
-    let oldArr = [...arr]
-    let filter = oldArr.filter((item) => item != arr[idx])
-    setArr(filter)
-    setCount(filter?.length)
+  const handleInputChangeUz = (index, event) => {
+    const newValue = event.target.value
+    setArrUz((prevArray) => {
+      const updatedArray = [...prevArray]
+      updatedArray[index] = newValue
+      return updatedArray
+    })
+  }
+
+  const handleInputChangeEn = (index, event) => {
+    const newValue = event.target.value
+    setArrEn((prevArray) => {
+      const updatedArray = [...prevArray]
+      updatedArray[index] = newValue
+      return updatedArray
+    })
+  }
+
+  const handleRemoveRu = (idx) => {
+    let oldArr = [...arrRu]
+    let filter = oldArr.filter((item) => item != arrRu[idx])
+    setArrRu(filter)
+    setCountRu(filter?.length)
+  }
+  const handleRemoveUz = (idx) => {
+    let oldArr = [...arrUz]
+    let filter = oldArr.filter((item) => item != arrUz[idx])
+    setArrUz(filter)
+    setCountUz(filter?.length)
+  }
+  const handleRemoveEn = (idx) => {
+    let oldArr = [...arrEn]
+    let filter = oldArr.filter((item) => item != arrEn[idx])
+    setArrEn(filter)
+    setCountEn(filter?.length)
   }
   useEffect(() => {
     setParams((prev) => {
       return {
         ...prev,
-        tariffs: arr,
+        tariffs: arrRu,
       }
     })
-  }, [arr])
+  }, [arrRu])
+  useEffect(() => {
+    setParams((prev) => {
+      return {
+        ...prev,
+        tariffs_uz: arrUz,
+      }
+    })
+  }, [arrUz])
+  useEffect(() => {
+    setParams((prev) => {
+      return {
+        ...prev,
+        tariffs_en: arrEn,
+      }
+    })
+  }, [arrEn])
 
   const handleSubmit = () => {
     dispatch(postCreateTarif(params))
@@ -84,9 +141,11 @@ const TariffsCreate = () => {
 
   useEffect(() => {
     dispatch(getCategory())
+    dispatch(getServices({ page: 1, limit: 50 }))
   }, [])
 
   const categories = useSelector((state) => state.category.category)
+  const services = useSelector((state) => state.services.services)
 
   return (
     <div className="card">
@@ -124,6 +183,15 @@ const TariffsCreate = () => {
                 </option>
               ))}
             </select>
+            <h6 className="mt-4">Услуга</h6>
+            <select name="service_id" onChange={handleChangeParams} className="form-select">
+              <option value="">Выбрать</option>
+              {services?.map((item, idx) => (
+                <option key={idx} value={item?._id}>
+                  {item?.name_ru}
+                </option>
+              ))}
+            </select>
             <h6 className="mt-4">Сумма</h6>
             <input
               value={params.price}
@@ -131,21 +199,63 @@ const TariffsCreate = () => {
               onChange={handleChangeParams}
               className="form-control"
             />
-            <h6 className="mt-4">Характеристика</h6>
-            {[...Array(count)].map((item, idx) => (
+            <h6 className="mt-4">Характеристика (RU)</h6>
+            {[...Array(countRu)].map((item, idx) => (
               <div key={idx} className="d-flex align-items-center gap-4 mb-3">
                 <input
-                  value={arr[idx] && arr[idx]}
-                  onChange={(e) => handleInputChange(idx, e)}
+                  value={arrRu[idx] && arrRu[idx]}
+                  onChange={(e) => handleInputChangeRu(idx, e)}
                   className="form-control"
                 />
-                <CButton onClick={() => handleRemove(idx)} color="danger" className="text-white">
+                <CButton onClick={() => handleRemoveRu(idx)} color="danger" className="text-white">
                   <CIcon icon={cilTrash} />
                 </CButton>
               </div>
             ))}
             <CButton
-              onClick={() => setCount((prev) => prev + 1)}
+              onClick={() => setCountRu((prev) => prev + 1)}
+              color="primary"
+              className="ms-auto mt-4"
+            >
+              <CIcon icon={cilCheckAlt} className="me-1" />
+              Добавить характеристику
+            </CButton>
+            <h6 className="mt-4">Характеристика (UZ)</h6>
+            {[...Array(countUz)].map((item, idx) => (
+              <div key={idx} className="d-flex align-items-center gap-4 mb-3">
+                <input
+                  value={arrUz[idx] && arrUz[idx]}
+                  onChange={(e) => handleInputChangeUz(idx, e)}
+                  className="form-control"
+                />
+                <CButton onClick={() => handleRemoveUz(idx)} color="danger" className="text-white">
+                  <CIcon icon={cilTrash} />
+                </CButton>
+              </div>
+            ))}
+            <CButton
+              onClick={() => setCountUz((prev) => prev + 1)}
+              color="primary"
+              className="ms-auto mt-4"
+            >
+              <CIcon icon={cilCheckAlt} className="me-1" />
+              Добавить характеристику
+            </CButton>
+            <h6 className="mt-4">Характеристика (EN)</h6>
+            {[...Array(countEn)].map((item, idx) => (
+              <div key={idx} className="d-flex align-items-center gap-4 mb-3">
+                <input
+                  value={arrEn[idx] && arrEn[idx]}
+                  onChange={(e) => handleInputChangeEn(idx, e)}
+                  className="form-control"
+                />
+                <CButton onClick={() => handleRemoveEn(idx)} color="danger" className="text-white">
+                  <CIcon icon={cilTrash} />
+                </CButton>
+              </div>
+            ))}
+            <CButton
+              onClick={() => setCountEn((prev) => prev + 1)}
               color="primary"
               className="ms-auto mt-4"
             >
