@@ -83,7 +83,7 @@ const requests = {
   // Faq
   getFaq: (params) => axios.get(`${API}/faq`, { params }),
   getDetailFaq: (id) => axios.get(`${API}/faq/${id}`),
-  postCreateFaq: (params) => axios.post(`${API}/faq/create`, formData(params)),
+  postCreateFaq: (params) => axios.post(`${API}/faq/create`, params),
   postDeleteFaq: (id) => axios.delete(`${API}/faq/delete/${id}`),
   postUpdateFaq: (id, params) => axios.put(`${API}/faq/${id}/update`, formData(params)),
   // Category
