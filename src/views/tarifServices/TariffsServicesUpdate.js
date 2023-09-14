@@ -6,7 +6,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import SunEditorComponent from 'src/components/SunEditorComponent'
 import { getCategory } from 'src/redux/actions/categoryActions'
-import { getDetailServices, postUpdateServices } from 'src/redux/actions/servicesActions'
+import {
+  getDetailServices,
+  getServices,
+  postUpdateServices,
+} from 'src/redux/actions/servicesActions'
 import { getDetailTarif, postUpdateTarif } from 'src/redux/actions/tarifActions'
 import {
   getDetailTarifServices,
@@ -31,7 +35,7 @@ const TariffsUpdate = () => {
     description_ru: data?.description_ru,
     description_uz: data?.description_uz,
     description_en: data?.description_en,
-    category: data?.category,
+    service_id: data?.serviceId,
     photo: data?.photo,
     date: dateInUzbekistan,
   })
@@ -82,18 +86,22 @@ const TariffsUpdate = () => {
       description_ru: data?.description_ru,
       description_uz: data?.description_uz,
       description_en: data?.description_en,
-      category: data?.category,
+      service_id: data?.serviceId,
       photo: data?.photo,
       date: dateInUzbekistan,
     })
   }, [id, data])
+  console.log(data)
 
   useEffect(() => {
     dispatch(getDetailTarifServices(id))
     dispatch(getCategory())
   }, [id])
 
-  const categories = useSelector((state) => state.category.category)
+  const services = useSelector((state) => state.services.services)
+  useEffect(() => {
+    dispatch(getServices({ limit: 100 }))
+  }, [])
 
   const { step } = useSelector((state) => state.tarifServices)
   useEffect(() => {
@@ -171,6 +179,18 @@ const TariffsUpdate = () => {
               value={updateContent.name_en}
               className="form-control"
             />
+            <h6 className="mt-4">Услуга</h6>
+            <select name="service_id" onChange={handleChangeContent} className="form-select">
+              {services?.map((item, idx) => (
+                <option
+                  key={idx}
+                  selected={updateContent.service_id === item?._id}
+                  value={item?._id}
+                >
+                  {item?.name_ru}
+                </option>
+              ))}
+            </select>
             <h6 className="mt-4">Описание (RU)</h6>
             <SunEditorComponent
               name="description_ru"

@@ -6,7 +6,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import SunEditorComponent from 'src/components/SunEditorComponent'
 import { getCategory } from 'src/redux/actions/categoryActions'
-import { getServicesByCategory, postCreateServices } from 'src/redux/actions/servicesActions'
+import {
+  getServices,
+  getServicesByCategory,
+  postCreateServices,
+} from 'src/redux/actions/servicesActions'
 import { postCreateTarif } from 'src/redux/actions/tarifActions'
 import { postCreateTarifServices } from 'src/redux/actions/tarifServicesActions'
 
@@ -24,6 +28,7 @@ const TariffsCreate = () => {
     description_ru: '',
     description_uz: '',
     description_en: '',
+    service_id: '',
     category_id: '',
     photo: '',
     date: dateInUzbekistan,
@@ -73,10 +78,11 @@ const TariffsCreate = () => {
   // }, [step])
 
   useEffect(() => {
-    dispatch(getCategory())
+    dispatch(getServices({ limit: 100 }))
   }, [])
 
-  const categories = useSelector((state) => state.category.category)
+  const services = useSelector((state) => state.services.services)
+  console.log(services)
 
   return (
     <div className="card">
@@ -145,10 +151,10 @@ const TariffsCreate = () => {
               onChange={handleChangeParams}
               className="form-control"
             />
-            <h6 className="mt-4">Категория</h6>
-            <select name="category_id" onChange={handleChangeParams} className="form-select">
+            <h6 className="mt-4">Услуга</h6>
+            <select name="service_id" onChange={handleChangeParams} className="form-select">
               <option value="">Выбрать</option>
-              {categories?.map((item, idx) => (
+              {services?.map((item, idx) => (
                 <option key={idx} value={item?._id}>
                   {item?.name_ru}
                 </option>
